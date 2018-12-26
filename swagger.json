@@ -173,7 +173,7 @@
       }
     },
     "Process" : {
-      "required" : [ "id", "name", "description", "reprocessTime", "pctCompleteAccurate", "processTime", "waitTime", "primaryPath" ],
+      "required" : [ "id", "name", "description", "reprocessTime", "processTime", "waitTime", "primaryPath" ],
       "properties" : {
         "id" : {
           "type" : "string",
@@ -191,10 +191,6 @@
         "reprocessTime" : {
           "type" : "integer",
           "description" : "The time it takes to fix defects in the process"
-        },
-        "pctCompleteAccurate" : {
-          "type" : "integer",
-          "description" : "The % of output that is accepted by the next process"
         },
         "processTime" : {
           "type" : "integer",
