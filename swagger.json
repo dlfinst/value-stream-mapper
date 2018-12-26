@@ -173,7 +173,7 @@
       }
     },
     "Process" : {
-      "required" : [ "id", "name", "description", "reprocessTime", "pctCompleteAccurate", "procTimeMin", "waitTimeMin" ],
+      "required" : [ "id", "name", "description", "reprocessTime", "pctCompleteAccurate", "processTime", "waitTime" ],
       "properties" : {
         "id" : {
           "type" : "string",
