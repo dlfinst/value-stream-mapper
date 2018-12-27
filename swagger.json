@@ -211,11 +211,13 @@
     "Path" : {
       "required" : [ "nextStep", "frequencyPct" ],
       "properties" : {
-        "nextStep" : {
-          "type" : "string"
+        "nextProcess" : {
+          "type" : "string",
+          "description" : "The ID of the next process step"
         },
         "frequencyPct" : {
           "type" : "integer",
+          "example" : 80,
           "description" : "0-100% how often this path is takem"
         }
       }
