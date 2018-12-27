@@ -13,7 +13,7 @@
     }
   },
   "paths" : {
-    "/valuestreams" : {
+    "/valueStreams" : {
       "get" : {
         "summary" : "retrieves value streams",
         "operationId" : "getValueStreams",
