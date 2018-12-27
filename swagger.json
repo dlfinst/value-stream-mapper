@@ -13,6 +13,18 @@
     }
   },
   "paths" : {
+    "/" : {
+      "get" : {
+        "summary" : "retrieves API",
+        "operationId" : "getAPI",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "Found"
+          }
+        }
+      }
+    },
     "/valueStreams" : {
       "get" : {
         "summary" : "retrieves value streams",
