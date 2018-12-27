@@ -224,6 +224,5 @@
     }
   },
   "schemes" : [ "https" ],
-  "host" : "virtserver.swaggerhub.com",
-  "basePath" : "/bdfinst8/value-stream-map/1.0.0"
+  "basePath" : "/api/v1"
 }
