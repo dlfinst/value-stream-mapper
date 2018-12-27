@@ -222,7 +222,7 @@
           "type" : "integer",
           "description" : "The number of minutes spent waiting on the process to start"
         },
-        "priamryPath" : {
+        "primaryPath" : {
           "$ref" : "#/definitions/Path"
         },
         "exceptionPath" : {
