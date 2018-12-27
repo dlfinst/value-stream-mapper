@@ -186,19 +186,29 @@
     },
     "Process" : {
       "required" : [ "id", "name", "description", "reprocessTime", "processTime", "waitTime", "primaryPath" ],
+      "example" : {
+        "id" : "d290f1ee-6c54-4b01-90e6-d701748f08",
+        "name" : "Coding",
+        "description" : "Writing the code",
+        "reprocessTime" : 20,
+        "processTime" : 80,
+        "waitTime" : 120,
+        "primaryPath" : {
+          "nextProcess" : "theNextProcessStep",
+          "frequencyPct" : 80
+        }
+      },
       "properties" : {
         "id" : {
           "type" : "string",
-          "format" : "uuid",
-          "example" : "d290f1ee-6c54-4b01-90e6-d701748f08"
+          "format" : "uuid"
         },
         "name" : {
           "type" : "string",
           "example" : "Coding"
         },
         "description" : {
-          "type" : "string",
-          "example" : "Writing the code"
+          "type" : "string"
         },
         "reprocessTime" : {
           "type" : "integer",
@@ -225,6 +235,7 @@
       "properties" : {
         "nextProcess" : {
           "type" : "string",
+          "example" : "theNextProcessID",
           "description" : "The ID of the next process step"
         },
         "frequencyPct" : {
