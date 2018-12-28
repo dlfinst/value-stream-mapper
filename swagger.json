@@ -231,7 +231,7 @@
       }
     },
     "Path" : {
-      "required" : [ "nextStep", "frequencyPct" ],
+      "required" : [ "nextProcess", "frequencyPct" ],
       "properties" : {
         "nextProcess" : {
           "type" : "string",
