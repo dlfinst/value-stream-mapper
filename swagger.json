@@ -153,6 +153,11 @@
       }
     }
   },
+  "x-swagger-mongoose" : {
+    "schema-options" : {
+      "timestamps" : true
+    }
+  },
   "definitions" : {
     "ValueStream" : {
       "type" : "object",
