@@ -4,14 +4,11 @@ const MongoMemoryServer = require('mongodb-memory-server')
 
 const mongoServer = new MongoMemoryServer();
 
-const debug = require('../utils').debug;
-const log = debug('LOG').extend('mongo-mock');
-
-process.env.DEBUG === 'true' ? log.enabled = true : log.enabled = false;
+const logger = require('../utils').logger('mongo-mock');
 
 mongoose.Promise = Promise;
 
-module.exports = (env) => {
+module.exports = () => {
   mongoServer.getConnectionString()
     .then((mongoUri) => {
       const mongooseOpts = { // options for mongoose 4.11.3 and above
@@ -25,16 +22,17 @@ module.exports = (env) => {
 
       mongoose.connection.on('error', (e) => {
         if (e.message.code === 'ETIMEDOUT') {
-          log(e);
+          logger.msg(e);
           mongoose.connect(mongoUri, mongooseOpts);
         }
-        log(e);
+        logger.msg(e);
       });
 
       mongoose.connection.once('open', () => {
-        log(`MongoDB successfully connected to ${mongoUri}`);
+        logger.msg(`MongoDB successfully connected to ${mongoUri}`);
       });
     });
 
   return mongoose.connection
 }
+
