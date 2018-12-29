@@ -2,8 +2,6 @@
 
 const express = require('express');
 const cors = require('cors');
-const listEndpoints = require('express-list-endpoints')
-const prettyHtml = require('json-pretty-html').default;
 const swaggerUi = require('./utils').swaggerUi;
 const path = require('path')
 const bodyParser = require('body-parser')
@@ -11,13 +9,13 @@ const httpLogger = require('morgan')
 const initialize = require('express-openapi').initialize;
 const v1ValueStreamService = require('./api-v1/services/value-stream');
 const v1ApiDoc = require('./api-v1/api-doc');
-const SwaggerUIBundle = require('swagger-ui-dist').SwaggerUIBundle
+const logger = require('./utils').logger('APP');
 
 const app = express();
 
-app.use(cors());
 app.use(bodyParser.json());
 app.use(httpLogger(':method :url :status :res[content-length] - :response-time ms'))
+app.use(cors());
 
 initialize({
   app,
@@ -29,20 +27,13 @@ initialize({
   paths: path.resolve(__dirname, './api-v1/paths')
 });
 
-const html = prettyHtml(listEndpoints(app));
+const serveSwaggerUI = (req, res) => {
+  const path = req.protocol + '://' + req.get('host') + `${v1ApiDoc.basePath}/api-docs`
+  logger.msg(`OpenAPI Path: ${path}`)
+  res.send(swaggerUi(path).index)
+}
 
-// app.route('/').get((req, res) => {
-//   res.status(200).send(html)
-// })
-
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(v1ApiDoc));
-//const swaggerDocument = req.protocol + '://' + req.get('host') + '/api/v1/api-docs';
-
-app.get('/', (req, res) => {
-  res.send(swaggerUi(req.protocol + '://' + req.get('host') + '/api/v1/api-docs').index)
-});
+app.get(`/`, serveSwaggerUI);
 app.use(express.static(swaggerUi().staticFolder));
-
-console.log(listEndpoints(app))
 
 module.exports = app

@@ -12,6 +12,7 @@ module.exports = {
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
+  "host": "vsm",
   "basePath": "/api/v1",
   "paths": {},
   "definitions": {

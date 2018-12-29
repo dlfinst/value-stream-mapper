@@ -1,11 +1,22 @@
 'use strict';
 
 const config = require('./config');
-const logger = require('./utils').logger('server');
+const logger = require('./utils').logger('SERVER');
+const listEndpoints = require('express-list-endpoints')
 const app = require('./app');
-
-const apiPort = process.env.SERVER_API_PORT
 
 // launch our backend into a port
 
-app.listen(config.apiPort, () => logger.msg(`LISTENING ON PORT ${apiPort}`))
+//app.listen(config.apiPort, () => logger.msg(`LISTENING ON PORT ${app.address()}`))
+
+const server = app.listen(config.apiPort, () => {
+  let host = server.address().address;
+  host = (host === '::') ? 'localhost' : host;
+  const port = server.address().port;
+  const uri = `http://${host}:${port}`
+  logger.msg(`Swagger UI at ${uri}`)
+
+  listEndpoints(app).forEach(route => {
+    logger.msg(`${route.methods[0]}:${uri}${route.path}`)
+  });
+});
