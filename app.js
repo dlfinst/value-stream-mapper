@@ -17,9 +17,12 @@ app.use(bodyParser.json());
 app.use(httpLogger(':method :url :status :res[content-length] - :response-time ms'))
 app.use(cors());
 
+const initApiDoc = v1ApiDoc
+initApiDoc.paths = {}
+
 initialize({
   app,
-  apiDoc: v1ApiDoc,
+  apiDoc: initApiDoc,
   exposeApiDocs: true,
   dependencies: {
     valueStreamService: v1ValueStreamService
@@ -28,7 +31,7 @@ initialize({
 });
 
 const serveSwaggerUI = (req, res) => {
-  const path = req.protocol + '://' + req.get('host') + `${v1ApiDoc.basePath}/api-docs`
+  const path = req.protocol + '://' + req.get('host') + `${initApiDoc.basePath}/api-docs`
   logger.msg(`OpenAPI Path: ${path}`)
   res.send(swaggerUi(path).index)
 }
