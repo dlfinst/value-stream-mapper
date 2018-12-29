@@ -4,13 +4,6 @@
 const data = require('../../data');
 const _ = require('lodash');
 const logger = require('../../utils').logger('value-stream');
-// const Router = require('express').Router
-// const valueStreamRoutes = new Router()
-const models = require('../../models')
-
-// const getAllValueStreams = async () => new Promise((resolve, reject) => {
-//   resolve(data || { error: 'No team found' })
-// })
 
 const getAllValueStreams = (search) => data || {
   error: 'No team found'
@@ -18,7 +11,7 @@ const getAllValueStreams = (search) => data || {
 
 const addValueStream = async (params) => new Promise((resolve, reject) => {
   try {
-    const valueStream = new models.ValueStream(params.teamName)
+    const valueStream = "BOB"
     logger.msg(JSON.stringify(valueStream))
     resolve(valueStream)
   } catch (err) {

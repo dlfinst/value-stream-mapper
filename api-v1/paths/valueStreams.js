@@ -6,35 +6,42 @@ const logger = require('../../utils').logger('valueStream');
 module.exports = () => {
 
   const GET = (req, res, next) => {
-    logger.msg(eq.query.searchString)
+    logger.msg(req.query.searchString)
 
     res.status(200).json(valueStreamService.getAllValueStreams(req.query.searchString))
   }
 
+  const PUT = (req, res, next) => {
+    logger.msg(req)
+
+    const response = { "response": "Did it" }
+    res.status(200).json(response)
+  }
+
   GET.apiDoc = {
-    summary: "retrieves value streams",
-    operationId: "getAllValueStreams",
-    description: "Return all value stream matching the search criteria\n",
+    summary: 'retrieves value streams',
+    operationId: 'getAllValueStreams',
+    description: 'Return all value stream matching the search criteria',
     produces: [
-      "application/json"
+      'application/json'
     ],
     parameters: [
       {
         'x-express-openapi-case-sensitive': false,
-        "in": "query",
-        "name": "searchString",
-        "description": "pass an optional search string for looking up value streams",
-        "required": false,
-        "type": "string"
+        in: 'query',
+        name: 'searchString',
+        description: 'pass an optional search string for looking up value streams',
+        required: false,
+        type: 'string'
       }
     ],
     responses: {
       200: {
-        description: "search results matching criteria",
+        description: 'search results matching criteria',
         schema: {
-          type: "array",
+          type: 'array',
           items: {
-            $ref: "#/definitions/ValueStream"
+            $ref: '#/definitions/ValueStream'
           }
         }
       },
@@ -47,100 +54,32 @@ module.exports = () => {
     }
   }
 
+  PUT.apiDoc = {
+    summary: 'adds a value stream',
+    operationId: 'addValueStream',
+    description: 'Adds a value stream',
+    consumes: ['application/json'],
+    produces: ['application/json'],
+    parameters: [{
+      in: 'body',
+      name: 'valueStream',
+      description: 'Value stream to add',
+      schema: {
+        $ref: '#/definitions/ValueStream'
+      }
+    }],
+    responses: {
+      201: { description: 'Value stream created' },
+      400: { description: 'Invalid input, object invalid' },
+      409: { description: 'an existing item already exists' },
+      default: { description: 'An error occured' }
+    }
+  }
+
   const operations = {
-    get: GET
+    get: GET,
+    put: PUT
   }
 
   return operations
 }
-
-// "paths": {
-//   "/": {
-//     "x-swagger-router-controller": "Default",
-//       "x-swagger-router-handle-subpaths": true,
-//         "get": {
-//       "summary": "retrieves API",
-//         "operationId": "getAPI",
-//           "produces": [
-//             "application/json"
-//           ],
-//             "responses": {
-//         "200": {
-//           "description": "Found"
-//         }
-//       }
-//     }
-//   },
-//   "/valuestream/{teamId}": {
-//     "x-swagger-router-controller": "Default",
-//       "x-swagger-router-handle-subpaths": true,
-//         "get": {
-//       "summary": "Gets a value stream by ID.",
-//         "description": "Returns a value stream for a team\n",
-//           "operationId": "getValueStream",
-//             "produces": [
-//               "application/json"
-//             ],
-//               "parameters": [
-//                 {
-//                   "name": "teamId",
-//                   "in": "path",
-//                   "description": "Team ID",
-//                   "type": "string",
-//                   "required": true
-//                 }
-//               ],
-//                 "responses": {
-//         "200": {
-//           "description": "OK",
-//             "schema": {
-//             "$ref": "#/definitions/ValueStream"
-//           }
-//         }
-//       }
-//     }
-//   },
-//   "/valuestream/{teamId}/process": {
-//     "x-swagger-router-controller": "Default",
-//       "x-swagger-router-handle-subpaths": true,
-//         "put": {
-//       "summary": "Adds a process to a value stream",
-//         "operationId": "addProcess",
-//           "description": "Adds a process to a value stream",
-//             "consumes": [
-//               "application/json"
-//             ],
-//               "produces": [
-//                 "application/json"
-//               ],
-//                 "parameters": [
-//                   {
-//                     "name": "teamId",
-//                     "in": "path",
-//                     "description": "Team ID",
-//                     "type": "string",
-//                     "required": true
-//                   },
-//                   {
-//                     "in": "body",
-//                     "name": "process",
-//                     "description": "Process to add",
-//                     "schema": {
-//                       "$ref": "#/definitions/Process"
-//                     }
-//                   }
-//                 ],
-//                   "responses": {
-//         "201": {
-//           "description": "Process added"
-//         },
-//         "400": {
-//           "description": "invalid input, object invalid"
-//         },
-//         "409": {
-//           "description": "an existing item already exists"
-//         }
-//       }
-//     }
-//   }
-// },

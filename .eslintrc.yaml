@@ -6,6 +6,7 @@ env:
   jest: true
   es6: true
 rules:
+  import/no-nodejs-modules: false
   import/no-commonjs: false
   jest/no-disabled-tests: 1
   jest/no-focused-tests: 2
