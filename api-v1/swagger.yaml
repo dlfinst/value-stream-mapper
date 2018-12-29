@@ -209,5 +209,6 @@ definitions:
 # Added by API Auto Mocking Plugin
 # basePath: /value-stream-map/1.0.0
 schemes:
+ - http
  - https
-basePath: /api/v1
+basePath: /value-stream-map/v1
