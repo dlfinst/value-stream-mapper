@@ -72,7 +72,7 @@ paths:
             $ref: '#/definitions/ValueStream'
       responses:
         201:
-          description: Palue stream created
+          description: Value stream created
         400:
           description: Invalid input, object invalid
         409:
