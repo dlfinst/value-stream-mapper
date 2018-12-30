@@ -30,8 +30,8 @@ paths:
         - application/json
       parameters:
         - in: query
-          name: searchString
-          description: pass an optional search string for looking up value streams
+          name: teamName
+          description: Team name fragment to find
           required: false
           type: string
       responses:
@@ -164,9 +164,10 @@ definitions:
         format: uuid
       name:
         type: string
-        example: Coding
+        description: The name of the process step
       description:
         type: string
+        description: Any clarification of the step
       reprocessTime:
         type: integer
         description: The time it takes to fix defects in the process
