@@ -197,7 +197,6 @@ definitions:
       processTime:
         type: integer
         minimum: 0
-        exclusiveMinimum: true
         description: The number of minutes spent working on the process
       waitTime:
         type: integer
@@ -218,7 +217,6 @@ definitions:
       frequencyPct:
         type: integer
         minimum: 0
-        exclusiveMinimum: true
         maximum: 100
         description: Percentage this path is takem
 schemes:
