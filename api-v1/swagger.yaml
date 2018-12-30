@@ -150,11 +150,14 @@ definitions:
     properties:
       id:
         type: string
+        minLength: 1
         format: uuid
       teamId:
         type: string
+        minLength: 1
       teamName:
         type: string
+        minLength: 1
       lastUpdated:
         type: string
         format: date-time
@@ -166,7 +169,6 @@ definitions:
     required:
     - id
     - name
-    - description
     - reprocessTime
     - processTime
     - waitTime
@@ -187,18 +189,23 @@ definitions:
         format: uuid
       name:
         type: string
+        minLength: 1
         description: The name of the process step
       description:
         type: string
         description: Any clarification of the step
       reprocessTime:
         type: integer
+        minimum: 0
         description: The time it takes to fix defects in the process
       processTime:
         type: integer
+        minimum: 0
+        exclusiveMinimum: true
         description: The number of minutes spent working on the process
       waitTime:
         type: integer
+        minimum: 0
         description: The number of minutes spent waiting on the process to start
       primaryPath:
         $ref: '#/definitions/Path'
