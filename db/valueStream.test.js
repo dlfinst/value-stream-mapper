@@ -46,6 +46,6 @@ describe('insert', () => {
     await valueStreams.insertOne(valueStream);
 
     const inserted = await valueStreams.findOne({ teamId: '12345' });
-    expect(inserted).toEqual(valueStream);
+    expect(inserted.teamId).toEqual(valueStream.teamId);
   });
 });
