@@ -110,9 +110,11 @@ paths:
           description: invalid input, object invalid
         409:
           description: an existing item already exists
+
 x-swagger-mongoose:
   schema-options:
     timestamps: true
+
 definitions:
   ValueStream:
     type: object
@@ -219,7 +221,9 @@ definitions:
         minimum: 0
         maximum: 100
         description: Percentage this path is takem
+
 schemes:
  - http
  - https
+
 basePath: /value-stream-map/v1
