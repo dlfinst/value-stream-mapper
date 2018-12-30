@@ -117,7 +117,6 @@ definitions:
   ValueStream:
     type: object
     required:
-    - id
     - teamName
     - teamId
     example:
@@ -126,32 +125,31 @@ definitions:
       teamID: TEAM12345
       lastUpdated: 2016-08-29T09:12:33.001Z
       processes:
-        - id: d290f1ee-6c54-4b01-90e6-d701748f08
+        - id: STEP12
           name: Coding
           description: Writing the code
           reprocessTime: 20
           processTime: 80
           waitTime: 120
           primaryPath:
-            nextProcess: theNextProcessStep
+            nextProcess: STEP13
             frequencyPct: 100        
-        - id: d290f1ee-6c54-4b01-90e6-d701748f09
+        - id: STEP13
           name: Code Review
           description: Validating tests
           reprocessTime: 20
           processTime: 80
           waitTime: 120
           primaryPath:
-            nextProcess: theNextProcessStep
+            nextProcess: STEP14
             frequencyPct: 80
           exceptionPath:
-            nextProcess: theException
+            nextProcess: STEP12
             frequencyPct: 20
     properties:
       id:
         type: string
-        minLength: 1
-        format: uuid
+        readOnly: true
       teamId:
         type: string
         minLength: 1
@@ -167,14 +165,12 @@ definitions:
           $ref: '#/definitions/Process'
   Process:
     required:
-    - id
     - name
-    - reprocessTime
     - processTime
     - waitTime
     - primaryPath
     example:
-      id: d290f1ee-6c54-4b01-90e6-d701748f08
+      id: STEP12
       name: Coding
       description: Writing the code
       reprocessTime: 20
@@ -186,7 +182,7 @@ definitions:
     properties:
       id:
         type: string
-        format: uuid
+        readOnly: true
       name:
         type: string
         minLength: 1
