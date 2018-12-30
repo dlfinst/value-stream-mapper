@@ -27,11 +27,13 @@
     "http-errors": "^1.7.1",
     "js-yaml": "^3.12.0",
     "lodash": "^4.17.11",
+    "mongodb": "^3.1.10",
     "mongodb-memory-server": "^2.9.1",
     "mongoose": "^5.4.1",
     "morgan": "^1.9.1",
     "resolve": "^1.9.0",
     "shortid": "^2.2.14",
+    "swagger-mongoose": "^1.1.2",
     "swagger-ui-dist": "^3.20.4",
     "uuid": "^3.3.2"
   },

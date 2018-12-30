@@ -7,7 +7,7 @@ let apiDoc
 
 try {
   apiDoc = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, './swagger.yaml'), 'utf8'));
-  logger.msg(apiDoc.paths);
+  logger.msg(Object.keys(apiDoc.paths));
 } catch (e) {
   logger.err(e);
   apiDoc = {}
