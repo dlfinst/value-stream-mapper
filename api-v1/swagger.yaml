@@ -33,6 +33,11 @@ paths:
           name: teamName
           description: Team name fragment to find
           required: false
+          type: string        
+        - in: query
+          name: teamId
+          description: Team ID to find
+          required: false
           type: string
       responses:
         200:
@@ -116,9 +121,6 @@ x-swagger-mongoose:
 definitions:
   ValueStream:
     type: object
-    required:
-    - teamName
-    - teamId
     example:
       id: VSM12345
       teamName: X Force

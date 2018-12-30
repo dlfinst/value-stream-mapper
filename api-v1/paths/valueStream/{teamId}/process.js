@@ -12,7 +12,7 @@ module.exports = () => {
 
   GET.apiDoc = {
     summary: "retrieves value streams",
-    operationId: "getAllValueStreams",
+    operationId: "getValueStreams",
     description: "Return all value stream matching the search criteria\n",
     produces: [
       "application/json"

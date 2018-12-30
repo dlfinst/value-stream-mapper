@@ -3,21 +3,33 @@
 
 const data = require('../../data');
 const _ = require('lodash');
-const logger = require('../../utils').logger('value-stream');
+const logger = require('../../utils').logger('SERVICE:valueStreams');
+const models = require('../../db/models')
+const apiDoc = require('../api-doc')
+const ValueStream = models(apiDoc).ValueStream
 
-const getAllValueStreams = (search) => data || {
-  error: 'No team found'
+const getValueStreams = async (search) => {
+  try {
+    return ValueStream.find()
+  } catch (err) {
+    throw err
+  }
 }
 
-const addValueStream = async (params) => new Promise((resolve, reject) => {
+const addValueStream = async (params) => {
+  let vsMap
   try {
-    const valueStream = "BOB"
-    logger.msg(JSON.stringify(valueStream))
-    resolve(valueStream)
+    vsMap = new ValueStream(params.payload)
+    logger.msg(vsMap)
   } catch (err) {
-    reject(err)
+    throw err
   }
-})
+  try {
+    vsMap.save()
+  } catch (err) {
+    throw err
+  }
+}
 
 const getValueStream = async (id) => {
   logger.msg(`getValueStream(${id})`)
@@ -64,7 +76,7 @@ const getValueStream = async (id) => {
 
 // valueStreamRoutes.get('/valueStreams', async (req, res, next) => {
 //   try {
-//     const data = await getAllValueStreams(req.params.id)
+//     const data = await getValueStreams(req.params.id)
 //     res.contentType = 'json';
 //     res.send(200, data)
 //     next()
@@ -75,7 +87,7 @@ const getValueStream = async (id) => {
 // })
 
 module.exports = {
-  getAllValueStreams,
+  getValueStreams,
   addValueStream,
   getValueStream
 }

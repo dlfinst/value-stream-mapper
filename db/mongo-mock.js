@@ -8,31 +8,22 @@ const logger = require('../utils').logger('mongo-mock');
 
 mongoose.Promise = Promise;
 
-module.exports = () => {
-  mongoServer.getConnectionString()
-    .then((mongoUri) => {
-      const mongooseOpts = { // options for mongoose 4.11.3 and above
-        autoReconnect: true,
-        reconnectTries: Number.MAX_VALUE,
-        reconnectInterval: 1000,
-        useNewUrlParser: true
-      };
+const run = async () => {
+  const mongooseOpts = {
+    autoReconnect: true,
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 1000,
+    useNewUrlParser: true
+  };
 
-      mongoose.connect(mongoUri, mongooseOpts);
-
-      mongoose.connection.on('error', (e) => {
-        if (e.message.code === 'ETIMEDOUT') {
-          logger.msg(e);
-          mongoose.connect(mongoUri, mongooseOpts);
-        }
-        logger.msg(e);
-      });
-
-      mongoose.connection.once('open', () => {
-        logger.msg(`MongoDB successfully connected to ${mongoUri}`);
-      });
+  try {
+    const mongoUri = await mongoServer.getConnectionString()
+    await mongoose.connect(mongoUri, mongooseOpts);
+    mongoose.connection.once('open', () => {
+      logger.msg(`MongoDB successfully connected to ${mongoUri}`);
     });
-
-  return mongoose.connection
+  } catch (err) {
+    logger.err(err.stack);
+  }
 }
-
+module.exports = { run }

@@ -1,14 +1,14 @@
 'use strict';
 
-const valueStreamService = require('../services/value-stream')
-const logger = require('../../utils').logger('valueStream');
+const valueStreamService = require('../services/valueStreams')
+const logger = require('../../utils').logger('PATH:valueStreams');
 
 module.exports = () => {
 
   const GET = (req, res, next) => {
     logger.msg(req.query.searchString)
 
-    res.status(200).json(valueStreamService.getAllValueStreams(req.query.searchString))
+    res.status(200).json(valueStreamService.getValueStreams(req.query.searchString))
   }
 
   const PUT = (req, res, next) => {
@@ -20,17 +20,15 @@ module.exports = () => {
 
   GET.apiDoc = {
     summary: 'retrieves value streams',
-    operationId: 'getAllValueStreams',
+    operationId: 'getValueStreams',
     description: 'Return all value stream matching the search criteria',
-    produces: [
-      'application/json'
-    ],
+    produces: ['application/json'],
     parameters: [
       {
         'x-express-openapi-case-sensitive': false,
         in: 'query',
-        name: 'searchString',
-        description: 'pass an optional search string for looking up value streams',
+        name: 'teamName',
+        description: 'Team name fragment to find',
         required: false,
         type: 'string'
       }

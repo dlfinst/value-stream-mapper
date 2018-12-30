@@ -4,10 +4,9 @@ const config = require('./config');
 const logger = require('./utils').logger('SERVER');
 const listEndpoints = require('express-list-endpoints')
 const app = require('./app');
+const database = require('./db/mongo-mock');
 
-// launch our backend into a port
-
-//app.listen(config.apiPort, () => logger.msg(`LISTENING ON PORT ${app.address()}`))
+database.run()
 
 const server = app.listen(config.apiPort, () => {
   let host = server.address().address;

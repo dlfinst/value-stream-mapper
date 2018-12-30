@@ -1,13 +1,14 @@
 'use strict';
 
 const express = require('express');
+
 const cors = require('cors');
 const swaggerUi = require('./utils').swaggerUi;
 const path = require('path')
 const bodyParser = require('body-parser')
 const httpLogger = require('morgan')
 const initialize = require('express-openapi').initialize;
-const v1ValueStreamService = require('./api-v1/services/value-stream');
+const v1ValueStreamService = require('./api-v1/services/valueStreams');
 const v1ApiDoc = require('./api-v1/api-doc');
 const logger = require('./utils').logger('APP');
 
