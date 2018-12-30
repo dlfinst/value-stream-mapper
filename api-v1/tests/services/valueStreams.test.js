@@ -1,32 +1,30 @@
 const valueStream = require('../../services/valueStreams')
 const database = require('../../../db/mongo-mock');
-const logger = require('../../../utils').logger('TEST:valueStreams');
+const logger = require('../../../utils').logger('valueStreams.test');
 
 describe('valueStream Services', () => {
-
-  // beforeAll(() => {
-  //   require('../../../app')
-  // })
 
   it('should add a new value stream', async () => {
     database.run()
 
     const params = {}
-    params.payload = require('../fixtures/valueStreamPayload')
+    params.payload = require('../fixtures/valueStreamPayload')()
 
-    expect.assertions(1);
+    expect.assertions(2);
 
     try {
-      await valueStream.addValueStream(params)
+      const data = await valueStream.addValueStream(params)
+      expect(data.id).toEqual(params.payload.id)
+
       try {
         const data = await valueStream.getValueStreams()
-        expect(data).toEqual('')
-        logger.msg(data)
+        expect(data[0].teamName).toEqual(params.payload.teamName)
       } catch (err) {
-        logger.err(err)
+        logger.err(`getValueStreams: ${err}`)
       }
+
     } catch (err) {
-      logger.err(err)
+      logger.err(`addValueStream: ${err}`)
     }
   })
 })

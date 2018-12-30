@@ -17,16 +17,15 @@ const getValueStreams = async (search) => {
 }
 
 const addValueStream = async (params) => {
-  let vsMap
+
+  const vsMap = new ValueStream(params.payload)
+
   try {
-    vsMap = new ValueStream(params.payload)
-    logger.msg(vsMap)
+    const newVsMap = await vsMap.save();
+    logger.msg(`addValueStream: ${newVsMap}`)
+    return newVsMap
   } catch (err) {
-    throw err
-  }
-  try {
-    vsMap.save()
-  } catch (err) {
+    logger.err(`addValueStream: ${err}`)
     throw err
   }
 }
