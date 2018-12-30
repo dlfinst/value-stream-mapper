@@ -1,7 +1,8 @@
-module.exports = {
-  "id": "VSM12345",
-  "teamName": "X Force",
-  "teamID": "TEAM12345",
-  "lastUpdated": "2016-08-29T09:12:33.001Z",
-  "processes": []
+const apiDoc = require('../../api-doc')
+
+
+module.exports = () => {
+  const vsm = apiDoc.definitions.ValueStream.example
+  vsm.processes = []
+  return vsm
 }
