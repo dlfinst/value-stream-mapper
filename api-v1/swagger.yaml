@@ -120,7 +120,7 @@ definitions:
     - teamName
     - teamId
     example:
-      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      id: VSM12345
       teamName: X Force
       teamID: TEAM12345
       lastUpdated: 2016-08-29T09:12:33.001Z
