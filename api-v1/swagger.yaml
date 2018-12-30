@@ -34,19 +34,6 @@ paths:
           description: pass an optional search string for looking up value streams
           required: false
           type: string
-        - in: query
-          name: skip
-          description: number of records to skip for pagination
-          type: integer
-          format: int32
-          minimum: 0
-        - in: query
-          name: limit
-          description: max number of records to return
-          type: integer
-          format: int32
-          minimum: 0
-          maximum: 50
       responses:
         200:
           description: search results matching criteria
