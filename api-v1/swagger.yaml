@@ -1,0 +1,234 @@
+swagger: '2.0'
+info:
+  description: Value Stream Map Service
+  version: 1.0.0
+  title: Value Stream Map Service
+  contact:
+    email: bdfinst@gmail.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+ 
+paths:
+  /:
+    get:
+      summary: retrieves API
+      operationId: getAPI
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Found
+  /valueStreams:
+    get:
+      summary: retrieves value streams
+      operationId: getValueStreams
+      description: |
+        Return all value stream matching the search criteria
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: teamName
+          description: Team name fragment to find
+          required: false
+          type: string
+        - in: query
+          name: teamId
+          description: Team ID to find
+          required: false
+          type: string
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ValueStream'
+        400:
+          description: bad input parameter
+    put:
+      summary: adds a value stream
+      operationId: addValueStream
+      description: Adds a value stream
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: valueStream
+          description: Value stream to add
+          schema:
+            $ref: '#/definitions/ValueStream'
+      responses:
+        201:
+          description: Value stream created
+        400:
+          description: Invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /valuestream/{teamId}:
+    get:
+      summary: Gets a value stream by ID.
+      description: >
+        Returns a value stream for a team
+      operationId: getValueStream
+      produces:
+        - application/json
+      parameters:
+        - name: teamId
+          in: path
+          description: Team ID
+          type: string
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ValueStream'
+  /valuestream/{teamId}/process:
+    put:
+      summary: Adds a process to a value stream
+      operationId: addProcess
+      description: Adds a process to a value stream
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: teamId
+          in: path
+          description: Team ID
+          type: string
+          required: true
+        - in: body
+          name: process
+          description: Process to add
+          schema:
+            $ref: '#/definitions/Process'
+      responses:
+        201:
+          description: Process added
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+
+x-swagger-mongoose:
+  schema-options:
+    timestamps: true
+
+definitions:
+  ValueStream:
+    type: object
+    required:
+    - teamName
+    - teamId
+    example:
+      id: VSM123456
+      teamName: X Force
+      teamId: TEAM12345
+      lastUpdated: 2016-08-29T09:12:33.001Z
+      processes:
+        - id: STEP12
+          name: Coding
+          description: Writing the code
+          reprocessTime: 20
+          processTime: 80
+          waitTime: 120
+          primaryPath:
+            nextProcess: STEP13
+            frequencyPct: 100        
+        - id: STEP13
+          name: Code Review
+          description: Validating tests
+          reprocessTime: 20
+          processTime: 80
+          waitTime: 120
+          primaryPath:
+            nextProcess: STEP14
+            frequencyPct: 80
+          exceptionPath:
+            nextProcess: STEP12
+            frequencyPct: 20
+    properties:
+      id:
+        type: string
+        readOnly: true
+      teamId:
+        type: string
+        minLength: 1
+      teamName:
+        type: string
+        minLength: 1
+      lastUpdated:
+        type: string
+        format: date-time
+      processes:
+        type: array
+        items: 
+          $ref: '#/definitions/Process'
+  Process:
+    required:
+    - name
+    - processTime
+    - waitTime
+    - primaryPath
+    example:
+      id: STEP12
+      name: Coding
+      description: Writing the code
+      reprocessTime: 20
+      processTime: 80
+      waitTime: 120
+      primaryPath:
+        nextProcess: theNextProcessStep
+        frequencyPct: 80
+    properties:
+      id:
+        type: string
+        readOnly: true
+      name:
+        type: string
+        minLength: 1
+        description: The name of the process step
+      description:
+        type: string
+        description: Any clarification of the step
+      reprocessTime:
+        type: integer
+        minimum: 0
+        description: The time it takes to fix defects in the process
+      processTime:
+        type: integer
+        minimum: 0
+        description: The number of minutes spent working on the process
+      waitTime:
+        type: integer
+        minimum: 0
+        description: The number of minutes spent waiting on the process to start
+      primaryPath:
+        $ref: '#/definitions/Path'
+      exceptionPath:
+        $ref: '#/definitions/Path'
+  Path:
+    required:
+      - nextProcess
+      - frequencyPct
+    properties:
+      nextProcess:
+        type: string
+        description: The ID of the next process step
+      frequencyPct:
+        type: integer
+        minimum: 0
+        maximum: 100
+        description: Percentage this path is takem
+
+schemes:
+ - http
+ - https
+
+basePath: /value-stream-map/v1
