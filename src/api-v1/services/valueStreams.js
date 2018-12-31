@@ -1,17 +1,28 @@
-/* eslint-disable no-new */
 'use strict'
 
-const data = require('../../data')
-const _ = require('lodash')
-const logger = require('../../utils').logger('SERVICE:valueStreams')
+const utils = require('../../utils')
+const logger = utils.logger('SERVICE:valueStreams')
 const models = require('../../db/models')
 const apiDoc = require('../api-doc')
 const ValueStream = models(apiDoc).ValueStream
+const generateSerialId = utils.generateSerialId
 
 const getValueStreams = async (search) => {
-  logger.msg(search)
+  const searchObj = Object(search)
+  const query = {}
+
+  if (searchObj.hasOwnProperty('teamId')) {
+    query.teamId = search.teamId
+  }
+
+  if (searchObj.hasOwnProperty('teamName')) {
+    query.teamName = { $regex: searchObj.teamName, $options: 'i' }
+  }
+
+  logger.msg(`Query: ${JSON.stringify(query)}`)
+
   try {
-    return ValueStream.find()
+    return ValueStream.find(query).exec()
   } catch (err) {
     throw err
   }
@@ -19,11 +30,15 @@ const getValueStreams = async (search) => {
 
 const addValueStream = async (params) => {
 
-  const vsMap = new ValueStream(params.payload)
+  const newVS = {
+    teamName: params.payload.teamName,
+    teamId: params.payload.teamId || generateSerialId(params.payload.teamName, 10),
+    processes: params.payload.processes || []
+  }
+  const vsMap = new ValueStream(newVS)
 
   try {
     const newVsMap = await vsMap.save()
-    logger.msg(`addValueStream: ${newVsMap}`)
     return newVsMap
   } catch (err) {
     logger.err(`addValueStream: ${err}`)
@@ -31,63 +46,7 @@ const addValueStream = async (params) => {
   }
 }
 
-const getValueStream = async (id) => {
-  logger.msg(`getValueStream(${id})`)
-  return new Promise((resolve, reject) => {
-    try {
-      const team = _.find(data, (team) => team.teamId === Number(id)) || { error: `No team found for ${id}` }
-
-      logger.msg(`ID: ${id}: ${JSON.stringify(team.teamName)} `)
-      resolve(team)
-    } catch (err) {
-      reject(err)
-    }
-  })
-}
-
-// valueStreamRoutes.get('/valueStream/:id', async (req, res, next) => {
-//   try {
-//     const team = await getValueStream(req.params.id)
-//     res.contentType = 'json';
-//     const httpCode = team.hasOwnProperty('teamId') ? 200 : 204
-
-//     res.send(httpCode, team)
-//     next()
-//   } catch (err) {
-//     res.send(500, err)
-//     next(err)
-//   }
-// })
-
-// valueStreamRoutes.post('/valueStream', async (req, res, next) => {
-//   try {
-//     logger.msg(req.body)
-
-//     const added = await addValueStream(req.body)
-//     res.send(201, { status: 'created', data: added })
-//     next()
-//   } catch (err) {
-//     logger.err(err)
-
-//     res.send(500, err)
-//     next(err)
-//   }
-// })
-
-// valueStreamRoutes.get('/valueStreams', async (req, res, next) => {
-//   try {
-//     const data = await getValueStreams(req.params.id)
-//     res.contentType = 'json';
-//     res.send(200, data)
-//     next()
-//   } catch (err) {
-//     res.send(500, err)
-//     next(err)
-//   }
-// })
-
 module.exports = {
   getValueStreams,
-  addValueStream,
-  getValueStream
+  addValueStream
 }
