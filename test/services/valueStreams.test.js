@@ -1,44 +1,67 @@
-/* eslint-disable prefer-arrow-callback */
 
 const valueStream = require('../../src/api-v1/services/valueStreams')
 const database = require('../../src/db/mongoose-connection')
-const mochaAsync = require('../helpers/mochaAsync')
 const expect = require('chai').expect
 const makeVSM = require('../fixtures/valueStreamPayload')
+const randomTeam = require('../fixtures/teamNames')
 
-beforeEach(mochaAsync(async function () {
-  await database.mongoose.run()
-}))
+const loadValueStreams = async (count) => {
+  const params = {}
+  return new Array(count).fill(0).map(async () => {
+    params.payload = makeVSM(randomTeam())
+    try {
+      return await valueStream.addValueStream(params)
+    } catch (err) {
+      console.log(err)
+    }
+  })
+}
 
-afterEach(mochaAsync(async function () {
-  await database.mongoose.stop()
-}))
+beforeEach(async () => {
+  try {
+    await database.mongoose.run()
+  } catch (error) {
+    throw error
+  }
+})
 
-describe('valueStream Services', function () {
+afterEach(async () => {
+  try {
+    await database.mongoose.stop()
+  } catch (error) {
+    throw error
+  }
+})
 
+describe('valueStream Services', () => {
   let addedVS
   const params = {}
   params.payload = makeVSM('X Force')
 
-  it('should add a new value stream', mochaAsync(async function () {
+  it('should add a new value stream', async () => {
 
     addedVS = await valueStream.addValueStream(params)
     expect(addedVS.id).to.be.equal(params.payload.id)
 
-  }))
+  })
 
-  it('should return all value streams', mochaAsync(async function () {
-    params.payload = makeVSM('Guardians')
-    addedVS = await valueStream.addValueStream(params)
+  it('should return all value streams', async () => {
+    const count = 1000
+    // params.payload = makeVSM('Guardians')
+    // await valueStream.addValueStream(params)
 
-    params.payload = makeVSM('Avengers')
-    addedVS = await valueStream.addValueStream(params)
+    try {
+      await loadValueStreams(count)
+    } catch (error) {
+      throw error
+    }
 
-    params.payload = makeVSM('X factor')
-    addedVS = await valueStream.addValueStream(params)
-
-    const data = await valueStream.getValueStreams()
-    expect(data[0].teamName).to.equal('Guardians')
-    expect(data.length).to.equal(3)
-  }))
+    try {
+      const data = await valueStream.getValueStreams()
+      //expect(data[0].teamName).to.equal('Guardians')
+      expect(data.length).to.equal(count)
+    } catch (error) {
+      throw error
+    }
+  })
 })

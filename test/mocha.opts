@@ -1,5 +1,4 @@
--A
---reporter spec
+--async-only
 --recursive
---reporter spec 
+--reporter list 
 --exit
