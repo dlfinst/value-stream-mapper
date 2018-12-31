@@ -124,13 +124,13 @@ definitions:
   ValueStream:
     type: object
     required:
-    - teamName
-    - teamId
+      - teamName
+      - teamId
     example:
       teamName: X Force
       teamId: TEAM12345
       processes:
-        - id: STEP12
+        - stepId: STEP12
           name: Coding
           description: Writing the code
           reprocessTime: 20
@@ -139,7 +139,7 @@ definitions:
           primaryPath:
             nextProcess: STEP13
             frequencyPct: 100        
-        - id: STEP13
+        - stepId: STEP13
           name: Code Review
           description: Validating tests
           reprocessTime: 20
@@ -164,12 +164,13 @@ definitions:
           $ref: '#/definitions/Process'
   Process:
     required:
-    - name
-    - processTime
-    - waitTime
-    - primaryPath
+      - stepId
+      - name
+      - processTime
+      - waitTime
+      - primaryPath
     example:
-      id: STEP12
+      stepId: STEP12
       name: Coding
       description: Writing the code
       reprocessTime: 20
@@ -179,9 +180,8 @@ definitions:
         nextProcess: theNextProcessStep
         frequencyPct: 80
     properties:
-      id:
+      stepId:
         type: string
-        readOnly: true
       name:
         type: string
         minLength: 1
