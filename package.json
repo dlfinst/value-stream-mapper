@@ -5,7 +5,8 @@
   "repository": "https://github.com/bdfinst/mern-test-example.git",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon --exec 'mocha test/**/*.js' ",
+    "test": "mocha test/**/*.js",
+    "watch": "nodemon --exec 'mocha test/**/*.js'",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
   },
