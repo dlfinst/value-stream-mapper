@@ -1,16 +1,12 @@
 module.exports = {
-  'id': 'STEP13',
-  'name': 'Code Review',
-  'description': 'Validating tests',
+  'stepId': 'STEP12',
+  'name': 'Coding',
+  'description': 'Writing the code',
   'reprocessTime': 20,
   'processTime': 80,
   'waitTime': 120,
   'primaryPath': {
-    'nextProcess': 'STEP14',
+    'nextProcess': 'theNextProcessStep',
     'frequencyPct': 80
-  },
-  'exceptionPath': {
-    'nextProcess': 'STEP12',
-    'frequencyPct': 20
   }
 }

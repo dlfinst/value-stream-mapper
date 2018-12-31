@@ -8,17 +8,17 @@ const saveFixture = require('../fixtures/utils/saveFixture')
 const randomTeam = require('../fixtures/utils/getTeamName')
 const logger = require('../../src/utils').logger('valueStreams.test')
 
-const loadValueStreams = (count) => {
+const addRandomValueStreams = (count) => {
   const params = {}
   return Promise.all(new Array(count).fill(0).map(async () => {
     params.payload = makeVSM(randomTeam())
-    return valueStream.addValueStream(params).catch((err) => logger.err(`loadValueStreams:${err}`))
+    return valueStream.addValueStream(params).catch((err) => logger.err(`addRandomValueStreams:${err}`))
   }))
 }
 
 describe('Load and retrieve value streams', () => {
 
-  before(async () => {
+  beforeEach(async () => {
     try {
       await database.mongoose.run()
     } catch (error) {
@@ -26,7 +26,7 @@ describe('Load and retrieve value streams', () => {
     }
   })
 
-  after(async () => {
+  afterEach(async () => {
     try {
       await database.mongoose.stop()
     } catch (error) {
@@ -34,42 +34,44 @@ describe('Load and retrieve value streams', () => {
     }
   })
 
-  let addedVS
-  let returnedVsList
   const params = {}
-
-
-  it('should add a new value stream', async () => {
-    params.payload = makeVSM('X Force')
-    addedVS = await valueStream.addValueStream(params)
-
-    expect(addedVS.teamId).to.be.equal(params.payload.teamId)
-  })
 
   it('should return all value streams', async () => {
     const count = 1000
+    const params = {}
     params.payload = makeVSM('Guardians')
     await valueStream.addValueStream(params).catch((err) => console.log(err))
 
     try {
-      await loadValueStreams(count)
+      await addRandomValueStreams(count)
     } catch (error) {
       throw error
     }
 
     try {
-      returnedVsList = await valueStream.getValueStreams()
+      const returnedVsList = await valueStream.getValueStreams()
       const dataPath = path.join(__dirname, '../fixtures/valueStreams.json')
       saveFixture(returnedVsList, dataPath)
 
-      expect(returnedVsList[0].teamName).to.contain('X Force')
-      expect(returnedVsList.length).to.equal(count + 2)
+      expect(returnedVsList[0].teamName).to.contain('Guardians')
+      expect(returnedVsList.length).to.equal(count + 1)
     } catch (error) {
       throw error
     }
   })
 
   it('Should fetch value streams matching a partial team name', async () => {
+    const count = 100
+    const params = {}
+    params.payload = makeVSM('Guardians')
+    await valueStream.addValueStream(params).catch((err) => console.log(err))
+
+    try {
+      await addRandomValueStreams(count)
+    } catch (error) {
+      throw error
+    }
+
     try {
       const vsList = await valueStream.getValueStreams({ teamName: 'Guard' })
       expect(vsList[0].teamName).to.contain('Guard')
@@ -79,7 +81,22 @@ describe('Load and retrieve value streams', () => {
   })
 
   it('Should fetch value streams matching a teamID', async () => {
+    const count = 100
+    const params = {}
+    params.payload = makeVSM('Guardians')
+
     try {
+      await valueStream.addValueStream(params).catch((err) => console.log(err))
+
+      await addRandomValueStreams(count)
+
+    } catch (error) {
+      throw error
+    }
+
+    try {
+      const returnedVsList = await valueStream.getValueStreams()
+
       const vsList = await valueStream.getValueStreams({ teamId: returnedVsList[5].teamId })
       expect(vsList[0].teamId).to.equal(returnedVsList[5].teamId)
       expect(vsList.length).to.equal(1)
@@ -89,6 +106,27 @@ describe('Load and retrieve value streams', () => {
     }
   })
 
-  it('should add a new process to a value stream', async () => { })
+  it('should add a new process to a value stream', async () => {
+
+    try {
+
+      params.payload = makeVSM('X Force')
+      await valueStream.addValueStream(params)
+
+      const vsList = await valueStream.getValueStreams({ teamName: 'X Force' })
+      const oldProcessLen = vsList[0].processes.length
+      const newStep = require('../fixtures/processPayload')
+
+      const updated = await valueStream.addProcessStep(newStep, vsList[0].teamId)
+
+      expect(updated.processes.length).to.equal(oldProcessLen + 1)
+
+      expect(updated.processes[0].primaryPath[0].frequencyPct + updated.processes[0].exceptionPath[0].frequencyPct).to.equal(100)
+
+    } catch (error) {
+      throw error
+    }
+
+  })
 
 })
