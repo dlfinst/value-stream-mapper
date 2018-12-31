@@ -1,10 +1,10 @@
 'use strict'
 
 const config = require('./config')
-const logger = require('./utils').logger('SERVER')
+const logger = require('./src/utils').logger('SERVER')
 const listEndpoints = require('express-list-endpoints')
 const app = require('./app')
-const database = require('./db/mongo-mock')
+const database = require('./src/db/mongo-mock')
 
 database.run()
 
@@ -16,6 +16,6 @@ const server = app.listen(config.apiPort, () => {
   logger.msg(`Swagger UI at ${uri}`)
 
   listEndpoints(app).forEach(route => {
-    logger.msg(`${route.methods[0]}:${uri}${route.path}`)
+    logger.msg(`${route.methods[0]}: ${uri}${route.path}`)
   })
 })
