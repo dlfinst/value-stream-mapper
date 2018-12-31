@@ -2,4 +2,4 @@
 --recursive
 --reporter list 
 --exit
---timeout 10000
+--timeout 5000

@@ -42,9 +42,9 @@ describe('valueStream Services', () => {
   })
 
   it('should return all value streams', async () => {
-    const count = 10000
-    // params.payload = makeVSM('Guardians')
-    // await valueStream.addValueStream(params)
+    const count = 1000
+    params.payload = makeVSM('Guardians')
+    await valueStream.addValueStream(params).catch((err) => console.log(err))
 
     try {
       await loadValueStreams(count)
@@ -54,8 +54,8 @@ describe('valueStream Services', () => {
 
     try {
       const data = await valueStream.getValueStreams()
-      //expect(data[0].teamName).to.equal('Guardians')
-      expect(data.length).to.equal(count)
+      expect(data[0].teamName).to.equal('Guardians')
+      expect(data.length).to.equal(count + 1)
     } catch (error) {
       throw error
     }
