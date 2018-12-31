@@ -5,16 +5,12 @@ const expect = require('chai').expect
 const makeVSM = require('../fixtures/valueStreamPayload')
 const randomTeam = require('../fixtures/teamNames')
 
-const loadValueStreams = async (count) => {
+const loadValueStreams = (count) => {
   const params = {}
-  return new Array(count).fill(0).map(async () => {
+  return Promise.all(new Array(count).fill(0).map(async () => {
     params.payload = makeVSM(randomTeam())
-    try {
-      return await valueStream.addValueStream(params)
-    } catch (err) {
-      console.log(err)
-    }
-  })
+    return valueStream.addValueStream(params).catch((err) => console.log(err))
+  }))
 }
 
 beforeEach(async () => {
@@ -46,7 +42,7 @@ describe('valueStream Services', () => {
   })
 
   it('should return all value streams', async () => {
-    const count = 1000
+    const count = 10000
     // params.payload = makeVSM('Guardians')
     // await valueStream.addValueStream(params)
 

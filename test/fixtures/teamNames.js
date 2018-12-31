@@ -25,6 +25,6 @@ const names = ['A-Force', 'A-Next', 'The A-Team', 'Action Pack', 'Agents of Atla
   'Young X-Men']
 
 module.exports = () => {
-  const nameIdx = Math.floor((Math.random() * names.length) + 1)
+  const nameIdx = Math.floor(Math.random() * names.length)
   return names[nameIdx]
 }
