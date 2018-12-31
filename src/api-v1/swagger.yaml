@@ -34,6 +34,11 @@ paths:
           description: Team name fragment to find
           required: false
           type: string
+        - in: query
+          name: teamId
+          description: Team ID to find
+          required: false
+          type: string
       responses:
         200:
           description: search results matching criteria
@@ -119,15 +124,13 @@ definitions:
   ValueStream:
     type: object
     required:
-    - teamName
-    - teamId
+      - teamName
+      - teamId
     example:
-      id: VSM123456
       teamName: X Force
       teamId: TEAM12345
-      lastUpdated: 2016-08-29T09:12:33.001Z
       processes:
-        - id: STEP12
+        - stepId: STEP12
           name: Coding
           description: Writing the code
           reprocessTime: 20
@@ -136,7 +139,7 @@ definitions:
           primaryPath:
             nextProcess: STEP13
             frequencyPct: 100        
-        - id: STEP13
+        - stepId: STEP13
           name: Code Review
           description: Validating tests
           reprocessTime: 20
@@ -149,30 +152,25 @@ definitions:
             nextProcess: STEP12
             frequencyPct: 20
     properties:
-      id:
-        type: string
-        readOnly: true
       teamId:
         type: string
         minLength: 1
       teamName:
         type: string
         minLength: 1
-      lastUpdated:
-        type: string
-        format: date-time
       processes:
         type: array
         items: 
           $ref: '#/definitions/Process'
   Process:
     required:
-    - name
-    - processTime
-    - waitTime
-    - primaryPath
+      - stepId
+      - name
+      - processTime
+      - waitTime
+      - primaryPath
     example:
-      id: STEP12
+      stepId: STEP12 
       name: Coding
       description: Writing the code
       reprocessTime: 20
@@ -182,9 +180,8 @@ definitions:
         nextProcess: theNextProcessStep
         frequencyPct: 80
     properties:
-      id:
+      stepId:
         type: string
-        readOnly: true
       name:
         type: string
         minLength: 1
