@@ -16,14 +16,13 @@ describe('valueStream Services', function () {
   }))
 
   let addedVS
+  const params = {}
+  params.payload = require('../fixtures/valueStreamPayload')()
 
   it('should add a new value stream', mochaAsync(async function () {
 
-    const params = {}
-    params.payload = require('../fixtures/valueStreamPayload')()
-
     addedVS = await valueStream.addValueStream(params)
-    expect(addedVS).to.be.equal(params.payload.id)
+    expect(addedVS.id).to.be.equal(params.payload.id)
 
   }))
 
