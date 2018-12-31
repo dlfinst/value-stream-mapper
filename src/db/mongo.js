@@ -6,4 +6,4 @@ module.exports = (env) => {
   )
 
   return mongoose.connection
-};
+}

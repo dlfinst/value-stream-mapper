@@ -1,0 +1,5 @@
+-A
+--reporter spec
+--recursive
+--reporter spec 
+--exit

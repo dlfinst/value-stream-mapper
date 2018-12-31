@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-const logger = require('../../../utils').logger('valueStream');
+const logger = require('../../../../utils').logger('valueStream')
 
 module.exports = () => {
 
-  const GET = (req, res, next) => {
+  const GET = (req, res) => {
     logger.msg(req.query.searchString)
 
     res.status(200).json({ "response": "{Team ID}" })

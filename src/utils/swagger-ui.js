@@ -1,25 +1,25 @@
 /* eslint-disable no-sync */
-const resolve = require('resolve');
-const path = require('path');
-const cheerio = require('cheerio');
-const fs = require('fs');
+const resolve = require('resolve')
+const path = require('path')
+const cheerio = require('cheerio')
+const fs = require('fs')
 
 
 // Dynamically replace the URL in the Swagger UI
 
 module.exports = (url) => {
   const staticFolder = path.dirname(resolve.sync('swagger-ui-dist', {
-    packageFilter(pkg, pkgfile) {
-      pkg.main = pkg.main.replace('dist/', '');
-      return pkg;
+    packageFilter(pkg) {
+      pkg.main = pkg.main.replace('dist/', '')
+      return pkg
     }
-  }));
+  }))
 
   const $ = cheerio.load(
     fs.readFileSync(
       path.join(staticFolder, 'index.html')
     ).toString()
-  );
+  )
 
   /**
    * rewrite init function
@@ -44,9 +44,9 @@ module.exports = (url) => {
         window.ui = ui
       }
     </script>
-  `);
+  `)
 
-  const index = $.html();
+  const index = $.html()
 
   return {
     index,

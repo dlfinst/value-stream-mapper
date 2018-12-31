@@ -1,4 +1,4 @@
-const apiDoc = require('../../api-doc')
+const apiDoc = require('../../src/api-v1/api-doc')
 
 
 module.exports = () => {

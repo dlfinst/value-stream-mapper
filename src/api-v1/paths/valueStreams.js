@@ -1,17 +1,17 @@
-'use strict';
+'use strict'
 
 const valueStreamService = require('../services/valueStreams')
-const logger = require('../../utils').logger('PATH:valueStreams');
+const logger = require('../../utils').logger('PATH:valueStreams')
 
 module.exports = () => {
 
-  const GET = (req, res, next) => {
+  const GET = (req, res) => {
     logger.msg(req.query.searchString)
 
     res.status(200).json(valueStreamService.getValueStreams(req.query.searchString))
   }
 
-  const PUT = (req, res, next) => {
+  const PUT = (req, res) => {
     logger.msg(req)
 
     const response = { "response": "Did it" }

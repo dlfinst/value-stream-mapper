@@ -5,7 +5,7 @@
   "repository": "https://github.com/bdfinst/mern-test-example.git",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "test": "mocha test/**/*.js ",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
   },
@@ -21,13 +21,13 @@
     "debug": "^4.1.1",
     "dotenv": "^6.2.0",
     "dotenv-safe": "^6.1.0",
+    "eslint-plugin-mocha": "^5.2.0",
     "express": "^4.16.4",
     "express-list-endpoints": "^4.0.0",
     "express-openapi": "^3.6.0",
     "http-errors": "^1.7.1",
     "js-yaml": "^3.12.0",
     "lodash": "^4.17.11",
-    "mongodb": "^3.1.10",
     "mongodb-memory-server": "^2.9.1",
     "mongoose": "^5.4.1",
     "morgan": "^1.9.1",
@@ -38,11 +38,10 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^5.10.0",
     "eslint-config-node": "^4.0.0",
-    "eslint-plugin-jest": "^22.1.2",
-    "jest": "^23.6.0",
-    "jest-environment-node": "^23.4.0",
+    "mocha": "^5.2.0",
     "superagent": "^4.0.0",
     "supertest": "^3.3.0"
   }

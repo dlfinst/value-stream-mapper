@@ -1,14 +1,15 @@
 /* eslint-disable no-new */
-'use strict';
+'use strict'
 
-const data = require('../../data');
-const _ = require('lodash');
-const logger = require('../../utils').logger('SERVICE:valueStreams');
+const data = require('../../data')
+const _ = require('lodash')
+const logger = require('../../utils').logger('SERVICE:valueStreams')
 const models = require('../../db/models')
 const apiDoc = require('../api-doc')
 const ValueStream = models(apiDoc).ValueStream
 
 const getValueStreams = async (search) => {
+  logger.msg(search)
   try {
     return ValueStream.find()
   } catch (err) {
@@ -21,7 +22,7 @@ const addValueStream = async (params) => {
   const vsMap = new ValueStream(params.payload)
 
   try {
-    const newVsMap = await vsMap.save();
+    const newVsMap = await vsMap.save()
     logger.msg(`addValueStream: ${newVsMap}`)
     return newVsMap
   } catch (err) {

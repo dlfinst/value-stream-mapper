@@ -1,8 +1,8 @@
 
 module.exports = (apiDoc) => {
 
-  const swaggerMongoose = require('swagger-mongoose');
-  const models = swaggerMongoose.compile(apiDoc).models;
+  const swaggerMongoose = require('swagger-mongoose')
+  const models = swaggerMongoose.compile(apiDoc).models
 
   return {
     Path: models.Path,

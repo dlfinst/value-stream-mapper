@@ -1,15 +1,12 @@
 extends:
   - node
 plugins:
-  - jest
+  - mocha
 env:
-  jest: true
   es6: true
+  mocha: true
 rules:
+  semi: [2, "never"]
   import/no-nodejs-modules: false
   import/no-commonjs: false
-  jest/no-disabled-tests: 1
-  jest/no-focused-tests: 2
-  jest/no-identical-title: 2
-  jest/prefer-to-have-length: 1
-  jest/valid-expect: 2
+  mocha/no-exclusive-tests: "error"
