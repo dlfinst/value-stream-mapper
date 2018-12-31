@@ -14,7 +14,7 @@ module.exports = () => {
   const PUT = (req, res) => {
     logger.msg(req)
 
-    const response = { "response": "Did it" }
+    const response = { 'response': 'Did it' }
     res.status(200).json(response)
   }
 

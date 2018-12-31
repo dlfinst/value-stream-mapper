@@ -32,12 +32,12 @@ initialize({
 })
 
 const serveSwaggerUI = (req, res) => {
-  const path = req.protocol + '://' + req.get('host') + `${initApiDoc.basePath}/api-docs`
+  const path = `${req.protocol  }://${  req.get('host')  }${initApiDoc.basePath}/api-docs`
   logger.msg(`OpenAPI Path: ${path}`)
   res.send(swaggerUi(path).index)
 }
 
-app.get(`/`, serveSwaggerUI)
+app.get('/', serveSwaggerUI)
 app.use(express.static(swaggerUi().staticFolder))
 
 module.exports = app

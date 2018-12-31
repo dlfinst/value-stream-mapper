@@ -7,33 +7,33 @@ module.exports = () => {
   const GET = (req, res) => {
     logger.msg(req.query.searchString)
 
-    res.status(200).json({ "response": "{Team ID}" })
+    res.status(200).json({ 'response': '{Team ID}' })
   }
 
   GET.apiDoc = {
-    summary: "retrieves value streams",
-    operationId: "getValueStreams",
-    description: "Return all value stream matching the search criteria\n",
+    summary: 'retrieves value streams',
+    operationId: 'getValueStreams',
+    description: 'Return all value stream matching the search criteria\n',
     produces: [
-      "application/json"
+      'application/json'
     ],
     parameters: [
       {
         'x-express-openapi-case-sensitive': false,
-        "in": "query",
-        "name": "searchString",
-        "description": "pass an optional search string for looking up value streams",
-        "required": false,
-        "type": "string"
+        'in': 'query',
+        'name': 'searchString',
+        'description': 'pass an optional search string for looking up value streams',
+        'required': false,
+        'type': 'string'
       }
     ],
     responses: {
       200: {
-        description: "search results matching criteria",
+        description: 'search results matching criteria',
         schema: {
-          type: "array",
+          type: 'array',
           items: {
-            $ref: "#/definitions/ValueStream"
+            $ref: '#/definitions/ValueStream'
           }
         }
       },

@@ -7,6 +7,8 @@ env:
   mocha: true
 rules:
   semi: [2, "never"]
+  quotes: [2, "single", "avoid-escape"]
+  prefer-template: 2
   import/no-nodejs-modules: false
   import/no-commonjs: false
   mocha/no-exclusive-tests: "error"
