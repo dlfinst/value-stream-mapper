@@ -20,7 +20,7 @@ paths:
       responses:
         200:
           description: Found
-  /valueStreams:
+  /valuestreams:
     get:
       summary: retrieves value streams
       operationId: getValueStreams
