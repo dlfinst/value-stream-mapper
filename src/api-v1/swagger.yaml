@@ -67,6 +67,8 @@ paths:
       responses:
         201:
           description: Value stream created
+          schema:
+            $ref: '#/definitions/ValueStream'
         default:
           description: unexpected error
           schema:
@@ -121,6 +123,8 @@ paths:
       responses:
         201:
           description: Process added
+          schema:
+            $ref: '#/definitions/ValueStream'
         default:
           description: unexpected error
           schema:
