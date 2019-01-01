@@ -31,13 +31,15 @@ paths:
         - in: query
           name: teamName
           description: Team name fragment to find
-          required: false
           type: string
+          x-express-openapi-case-sensitive: false
+          required: false
         - in: query
           name: teamId
           description: Team ID to find
-          required: false
           type: string
+          x-express-openapi-case-sensitive: false
+          required: false
       responses:
         200:
           description: search results matching criteria
@@ -77,10 +79,11 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: teamId
-          in: path
+        - in: path
+          name: teamId
           description: Team ID
           type: string
+          x-express-openapi-case-sensitive: false
           required: true
       responses:
         200:
@@ -97,10 +100,11 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: teamId
-          in: path
+        - in: path
+          name: teamId
           description: Team ID
           type: string
+          x-express-openapi-case-sensitive: false
           required: true
         - in: body
           name: process
