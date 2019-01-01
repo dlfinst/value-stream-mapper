@@ -2,6 +2,7 @@
 
 const express = require('express')
 const createHealthcheckMiddleware = require('healthcheck-ping')
+const prettyJson = require('express-prettify')
 
 const cors = require('cors')
 const utils = require('./src/utils')
@@ -19,8 +20,9 @@ const app = express()
 app.use(bodyParser.json())
 app.use(httpLogger(':method :url :status :res[content-length] - :response-time ms'))
 app.use(cors())
+app.use(prettyJson({ query: 'pretty' }))
 
-const initApiDoc = v1ApiDoc
+const initApiDoc = Object.assign({}, v1ApiDoc)
 initApiDoc.paths = {}
 
 initialize({
@@ -30,7 +32,7 @@ initialize({
   dependencies: {
     valueStreamService: v1ValueStreamService
   },
-  paths: path.resolve(__dirname, './src/api-v1/paths')
+  paths: path.resolve(__dirname, './src/api-v1/routes')
 })
 
 const serveSwaggerUI = (req, res) => {
