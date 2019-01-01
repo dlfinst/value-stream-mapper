@@ -10,9 +10,14 @@ module.exports = (module) => {
   const err = debug.extend(`${module}:ERROR`)
   err.enabled = true
 
+  const json = (desc, json) => {
+    msg(`${desc}: ${JSON.stringify(json)}`)
+  }
+
   return {
     msg,
-    err
+    err,
+    json
   }
 }
 
