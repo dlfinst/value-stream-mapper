@@ -24,8 +24,7 @@ paths:
     get:
       summary: retrieves value streams
       operationId: getValueStreams
-      description: |
-        Return all value stream matching the search criteria
+      description: Return all value stream matching the search criteria
       produces:
         - application/json
       parameters:
@@ -60,6 +59,7 @@ paths:
         - in: body
           name: valueStream
           description: Value stream to add
+          required: true
           schema:
             $ref: '#/definitions/ValueStream'
       responses:
@@ -72,8 +72,7 @@ paths:
   /valuestream/{teamId}:
     get:
       summary: Gets a value stream by ID.
-      description: >
-        Returns a value stream for a team
+      description: Returns a value stream for a team
       operationId: getValueStream
       produces:
         - application/json
@@ -106,6 +105,7 @@ paths:
         - in: body
           name: process
           description: Process to add
+          required: true
           schema:
             $ref: '#/definitions/Process'
       responses:
