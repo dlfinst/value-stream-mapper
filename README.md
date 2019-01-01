@@ -1,5 +1,7 @@
 # Value Stream Service
 
+Very much WIP
+
 ## Scripts
 
 - `npm run test`: Execute tests
