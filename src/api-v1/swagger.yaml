@@ -69,7 +69,7 @@ paths:
           description: Invalid input, object invalid
         409:
           description: an existing item already exists
-  /valuestream/{teamId}:
+  /valuestreams/{teamId}:
     get:
       summary: Gets a value stream by ID.
       description: Returns a value stream for a team
@@ -88,7 +88,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ValueStream'
-  /valuestream/{teamId}/process:
+  /valuestreams/{teamId}/process:
     put:
       summary: Adds a process to a value stream
       operationId: addProcess
