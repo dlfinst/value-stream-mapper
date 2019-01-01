@@ -223,4 +223,4 @@ schemes:
  - http
  - https
 
-basePath: /value-stream-map/v1
+basePath: /v1
