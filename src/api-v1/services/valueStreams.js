@@ -21,8 +21,6 @@ const buildValueStream = (valueStream) => {
 
 const buildProcessPath = (path) => {
 
-  console.log(path)
-
   const newPath = {
     nextProcess: path.hasOwnProperty('stepId') ? path.stepId : null,
     frequencyPct: path.hasOwnProperty('frequencyPct') ? path.frequencyPct : 0

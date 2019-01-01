@@ -1,6 +1,7 @@
 'use strict'
 
 const express = require('express')
+const createHealthcheckMiddleware = require('healthcheck-ping')
 
 const cors = require('cors')
 const utils = require('./src/utils')
@@ -39,6 +40,7 @@ const serveSwaggerUI = (req, res) => {
 }
 
 app.get('/', serveSwaggerUI)
+app.use(createHealthcheckMiddleware())
 app.use(express.static(swaggerUi().staticFolder))
 
 module.exports = app

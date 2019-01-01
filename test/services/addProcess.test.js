@@ -49,7 +49,7 @@ describe.skip('Load and retrieve value streams', () => {
   it('should return all value streams', async () => {
     const count = 1000
     params.payload = makeVSM('Guardians')
-    await valueStream.addValueStream(params).catch((err) => console.log(err))
+    await valueStream.addValueStream(params).catch((err) => logger.err(err))
 
     try {
       await loadValueStreams(count)

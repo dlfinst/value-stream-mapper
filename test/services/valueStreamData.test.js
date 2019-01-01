@@ -40,7 +40,7 @@ describe('Load and retrieve value streams', () => {
     const count = 1000
     const params = {}
     params.payload = makeVSM('Guardians')
-    await valueStream.addValueStream(params).catch((err) => console.log(err))
+    await valueStream.addValueStream(params).catch((err) => logger.err(err))
 
     try {
       await addRandomValueStreams(count)
@@ -64,7 +64,7 @@ describe('Load and retrieve value streams', () => {
     const count = 100
     const params = {}
     params.payload = makeVSM('Guardians')
-    await valueStream.addValueStream(params).catch((err) => console.log(err))
+    await valueStream.addValueStream(params).catch((err) => logger.err(err))
 
     try {
       await addRandomValueStreams(count)
@@ -86,7 +86,7 @@ describe('Load and retrieve value streams', () => {
     params.payload = makeVSM('Guardians')
 
     try {
-      await valueStream.addValueStream(params).catch((err) => console.log(err))
+      await valueStream.addValueStream(params).catch((err) => logger.err(err))
 
       await addRandomValueStreams(count)
 
