@@ -15,6 +15,7 @@ paths:
       operationId: getAPI
       produces:
         - application/json
+        - text/html
       responses:
         200:
           description: Found
@@ -25,6 +26,7 @@ paths:
       description: Return all value stream matching the search criteria
       produces:
         - application/json
+        - text/html
       parameters:
         - in: query
           name: teamName
@@ -57,6 +59,7 @@ paths:
         - application/json
       produces:
         - application/json
+        - text/html
       parameters:
         - in: body
           name: valueStream
@@ -81,6 +84,7 @@ paths:
       operationId: getValueStream
       produces:
         - application/json
+        - text/html
       parameters:
         - in: path
           name: teamId
@@ -107,6 +111,7 @@ paths:
         - application/json
       produces:
         - application/json
+        - text/html
       parameters:
         - in: path
           name: teamId
