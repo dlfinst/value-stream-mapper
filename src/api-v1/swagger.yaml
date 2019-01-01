@@ -45,8 +45,10 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ValueStream'
-        400:
-          description: bad input parameter
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
     put:
       summary: adds a value stream
       operationId: addValueStream
@@ -65,10 +67,11 @@ paths:
       responses:
         201:
           description: Value stream created
-        400:
-          description: Invalid input, object invalid
-        409:
-          description: an existing item already exists
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
   /valuestreams/{teamId}:
     get:
       summary: Gets a value stream by ID.
@@ -88,6 +91,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ValueStream'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
   /valuestreams/{teamId}/process:
     put:
       summary: Adds a process to a value stream
@@ -113,10 +121,10 @@ paths:
       responses:
         201:
           description: Process added
-        400:
-          description: invalid input, object invalid
-        409:
-          description: an existing item already exists
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 
 x-swagger-mongoose:
   schema-options:
@@ -220,6 +228,16 @@ definitions:
         minimum: 0
         maximum: 100
         description: Percentage this path is takem
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
 
 schemes:
  - http
