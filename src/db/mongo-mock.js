@@ -3,6 +3,7 @@ const MongoMemoryServer = require('mongodb-memory-server').default
 const logger = require('../utils').logger
 
 mongoose.Promise = Promise
+mongoose.set('useFindAndModify', false)
 let mongoServer
 
 const run = async () => {

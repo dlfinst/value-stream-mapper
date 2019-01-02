@@ -5,7 +5,7 @@ const logger = require('../../../src/utils').logger
 module.exports = (data, filePath) => {
   try {
     fs.accessSync(filePath, fs.constants.F_OK)
-    logger.info(`Using existing ${filePath}`)
+    logger.silly(`Using existing ${filePath}`)
   } catch (err) {
     try {
       fs.writeFileSync(filePath, JSON.stringify(data))

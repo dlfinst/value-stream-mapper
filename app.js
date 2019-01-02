@@ -30,11 +30,8 @@ initialize({
   app,
   apiDoc: initApiDoc,
   exposeApiDocs: true,
-  errorMiddleware: (err, req, res, next) => {
-    logger.error(err)
-    res.status(err.status)
-    res.send(err.errors)
-    next(err)
+  errorTransformer(error) {
+    logger.error(error)
   },
   dependencies: {
     valueStreamService: v1ValueStreamService

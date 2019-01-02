@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-expressions */
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const path = require('path')
 const app = require('../../app')
 const expect = chai.expect
-const logger = require('../../src/utils').logger
 const newValueStream = require('../fixtures/utils/genValueStreamPayloads')
 const database = require('../../src/db/mongoose-connection')
 
@@ -48,8 +46,6 @@ describe('/valuestreams', () => {
       .put('/v1/valuestreams')
       .send({ teamID: 'nada' })
       .end((error, response) => {
-        //logger.json('BAD:', response)
-        logger.error(error)
         expect(response).to.have.status(400)
         expect(response.error).to.have.property('text')
         done()

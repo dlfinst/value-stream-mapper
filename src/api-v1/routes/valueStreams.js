@@ -18,8 +18,6 @@ module.exports = () => {
   const PUT = async (req, res, next) => {
     try {
       const result = await valueStreams.addValueStream(req.body)
-      logger.info(result)
-
       res.status(201).json(result)
     } catch (err) {
       logger.error(err.errors)

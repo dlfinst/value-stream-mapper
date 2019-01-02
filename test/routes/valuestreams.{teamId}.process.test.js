@@ -12,18 +12,18 @@ describe.skip('Load and retrieve value streams', () => {
       .get('/blobs')
       .end((err, res) => {
         chai.request(server)
-          .put(`/blob/${  res.body[0]._id}`)
+          .put(`/blob/${res.body[0]._id}`)
           .send({ 'name': 'Spider' })
           .end((error, response) => {
-            response.should.have.status(200);
-            response.should.be.json;
-            response.body.should.be.a('object');
-            response.body.should.have.property('UPDATED');
-            response.body.UPDATED.should.be.a('object');
-            response.body.UPDATED.should.have.property('name');
-            response.body.UPDATED.should.have.property('_id');
-            response.body.UPDATED.name.should.equal('Spider');
-            done();
+            response.should.have.status(200)
+            response.should.be.json
+            response.body.should.be.a('object')
+            response.body.should.have.property('UPDATED')
+            response.body.UPDATED.should.be.a('object')
+            response.body.UPDATED.should.have.property('name')
+            response.body.UPDATED.should.have.property('_id')
+            response.body.UPDATED.name.should.equal('Spider')
+            done()
           })
       })
   })

@@ -7,7 +7,7 @@ winston.level = config.logLevel !== 'ERROR' ? 'info' : 'error'
 
 const options = {
   handleExceptions: true,
-  json: false,
+  json: true,
   colorize: true,
 }
 
@@ -31,3 +31,4 @@ logger.stream = {
 }
 
 module.exports = logger
+
