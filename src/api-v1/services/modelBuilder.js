@@ -12,6 +12,7 @@ const valueStream = (valueStream) => {
   const newVS = {
     teamName: valueStream.teamName,
     teamId: valueStream.teamId || generateSerialId(valueStream.teamName, 10),
+    status: 'ACTIVE',
     processes: valueStream.processes || []
   }
   return new ValueStreamModel(newVS)

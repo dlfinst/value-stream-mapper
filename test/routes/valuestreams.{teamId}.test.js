@@ -5,26 +5,14 @@ const request = chai.request
 
 const logger = require('../../src/utils').logger
 
-describe.skip('Load and retrieve value streams', () => {
+describe.skip('/valuestreams/{teamId}', () => {
 
-  it('should update a SINGLE blob on /blob/<id> PUT', (done) => {
-    request(server)
-      .get('/blobs')
-      .end((err, res) => {
-        chai.request(server)
-          .put(`/blob/${res.body[0]._id}`)
-          .send({ 'name': 'Spider' })
-          .end((error, response) => {
-            response.should.have.status(200)
-            response.should.be.json
-            response.body.should.be.a('object')
-            response.body.should.have.property('UPDATED')
-            response.body.UPDATED.should.be.a('object')
-            response.body.UPDATED.should.have.property('name')
-            response.body.UPDATED.should.have.property('_id')
-            response.body.UPDATED.name.should.equal('Spider')
-            done()
-          })
-      })
+  it('should return a value stream map for a teamId', (done) => {
+    throw new Error('Not implemented')
+    done()
+  })
+  it('should update a value stream map to "DELETE" status for a teamId', (done) => {
+    throw new Error('Not implemented')
+    done()
   })
 })

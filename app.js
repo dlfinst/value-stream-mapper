@@ -33,6 +33,10 @@ initialize({
   errorTransformer(error) {
     logger.error(error)
   },
+  errorMiddleware: (err, req, res, next) => {
+    res.status(err.status).send(err)
+    next(err)
+  },
   dependencies: {
     valueStreamService: v1ValueStreamService
   },

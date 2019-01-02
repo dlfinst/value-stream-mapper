@@ -35,9 +35,11 @@ describe('/valuestreams', () => {
         expect(response).to.be.json
         expect(response.body).to.be.a('object')
         expect(response.body).to.have.property('teamName')
+        expect(response.body).to.have.property('status')
         expect(response.body).to.have.property('teamId')
         expect(response.body).to.have.property('_id')
         expect(response.body.teamName).to.contain('Justice League')
+        expect(response.body.status).to.equal('ACTIVE')
         done()
       })
   })
