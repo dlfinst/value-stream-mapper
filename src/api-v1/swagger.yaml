@@ -145,9 +145,11 @@ definitions:
     required:
       - teamName
       - teamId
+      - status
     example:
       teamName: X Force
       teamId: TEAM12345
+      status: ACTIVE
       processes:
         - stepId: STEP12
           name: Coding
@@ -177,6 +179,9 @@ definitions:
       teamName:
         type: string
         minLength: 1
+      status:
+        type: string
+        description: ACTIVE or DELETE
       processes:
         type: array
         items: 
