@@ -8,7 +8,7 @@ Use the example .env.example file as a model .env for configuration.
 
 ## API Routing
 
-All routing is driven from `src/api-v1/swagger.yaml` and the matching routes. using [express-openapi](https://www.npmjs.com/package/express-openapi) 
+All routing is driven from `src/api-v1/swagger.yaml` and the matching routes using [express-openapi](https://www.npmjs.com/package/express-openapi) 
 
 ## Scripts
 
