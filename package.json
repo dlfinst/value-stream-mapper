@@ -43,10 +43,12 @@
     "shortid": "^2.2.14",
     "swagger-mongoose": "^1.1.2",
     "swagger-ui-dist": "^3.20.4",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "winston": "^3.1.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
     "eslint": "^5.10.0",
     "eslint-config-node": "^4.0.0",
     "mocha": "^5.2.0",

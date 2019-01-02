@@ -13,12 +13,13 @@ const httpLogger = require('morgan')
 const initialize = require('express-openapi').initialize
 const v1ValueStreamService = require('./src/api-v1/services/valueStreams')
 const v1ApiDoc = require('./src/api-v1/api-doc')
-const logger = utils.logger('APP')
-
+const logger = utils.logger
 const app = express()
 
 app.use(bodyParser.json())
-app.use(httpLogger(':method :url :status :res[content-length] - :response-time ms'))
+
+app.use(httpLogger('dev', { stream: logger.stream }))
+
 app.use(cors())
 app.use(prettyJson({ query: 'pretty' }))
 
@@ -29,20 +30,24 @@ initialize({
   app,
   apiDoc: initApiDoc,
   exposeApiDocs: true,
+  errorMiddleware: (err, req, res, next) => {
+    logger.error(err)
+    res.status(err.status)
+    res.send(err.errors)
+    next(err)
+  },
   dependencies: {
     valueStreamService: v1ValueStreamService
   },
   paths: path.resolve(__dirname, './src/api-v1/routes')
 })
+app.use(createHealthcheckMiddleware())
 
 const serveSwaggerUI = (req, res) => {
   const path = `${req.protocol}://${req.get('host')}${initApiDoc.basePath}/api-docs`
-  logger.msg(`OpenAPI Path: ${path}`)
   res.send(swaggerUi(path).index)
 }
-
 app.get('/', serveSwaggerUI)
-app.use(createHealthcheckMiddleware())
 app.use(express.static(swaggerUi().staticFolder))
 
 module.exports = app

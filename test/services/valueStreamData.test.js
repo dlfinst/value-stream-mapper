@@ -5,16 +5,10 @@ const database = require('../../src/db/mongoose-connection')
 const expect = require('chai').expect
 const makeVSM = require('../fixtures/utils/genValueStreamPayloads')
 const saveFixture = require('../fixtures/utils/saveFixture')
-const randomTeam = require('../fixtures/utils/getTeamName')
-const logger = require('../../src/utils').logger('valueStreams.test')
+const randomTeamName = require('../fixtures/utils/getTeamName')
+const logger = require('../../src/utils').logger
 
-const addRandomValueStreams = (count) => {
-  const params = {}
-  return Promise.all(new Array(count).fill(0).map(async () => {
-    params.payload = makeVSM(randomTeam())
-    return valueStream.addValueStream(params).catch((err) => logger.err(`addRandomValueStreams:${err}`))
-  }))
-}
+const addRandomValueStreams = (count) => Promise.all(new Array(count).fill(0).map(async () => valueStream.addValueStream(makeVSM(randomTeamName())).catch((err) => logger.error(`addRandomValueStreams:${err}`))))
 
 describe('Load and retrieve value streams', () => {
 
@@ -34,13 +28,9 @@ describe('Load and retrieve value streams', () => {
     }
   })
 
-  const params = {}
-
   it('should return all value streams', async () => {
     const count = 1000
-    const params = {}
-    params.payload = makeVSM('Guardians')
-    await valueStream.addValueStream(params).catch((err) => logger.err(err))
+    await valueStream.addValueStream(makeVSM('Guardians')).catch((err) => logger.error(err))
 
     try {
       await addRandomValueStreams(count)
@@ -62,9 +52,8 @@ describe('Load and retrieve value streams', () => {
 
   it('Should fetch value streams matching a partial team name', async () => {
     const count = 100
-    const params = {}
-    params.payload = makeVSM('Guardians')
-    await valueStream.addValueStream(params).catch((err) => logger.err(err))
+
+    await valueStream.addValueStream(makeVSM('Guardians')).catch((err) => logger.error(err))
 
     try {
       await addRandomValueStreams(count)
@@ -82,11 +71,9 @@ describe('Load and retrieve value streams', () => {
 
   it('Should fetch value streams matching a teamID', async () => {
     const count = 100
-    const params = {}
-    params.payload = makeVSM('Guardians')
 
     try {
-      await valueStream.addValueStream(params).catch((err) => logger.err(err))
+      await valueStream.addValueStream(makeVSM('Guardians')).catch((err) => logger.error(err))
 
       await addRandomValueStreams(count)
 
@@ -110,8 +97,7 @@ describe('Load and retrieve value streams', () => {
 
     try {
 
-      params.payload = makeVSM('X Force')
-      await valueStream.addValueStream(params)
+      await valueStream.addValueStream(makeVSM('X Force'))
 
       const vsList = await valueStream.getValueStreams({ teamName: 'X Force' })
       const oldProcessLen = vsList[0].processes.length

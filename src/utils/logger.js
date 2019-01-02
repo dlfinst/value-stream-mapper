@@ -1,23 +1,33 @@
 'use strict'
 
-const debug = require('debug')('VSM')
+const winston = require('winston')
 const config = require('../../config')
 
-module.exports = (module) => {
-  const msg = debug.extend(`${module}:LOG`)
-  msg.enabled = config.logLevel !== 'ERROR'
+winston.level = config.logLevel !== 'ERROR' ? 'info' : 'error'
 
-  const err = debug.extend(`${module}:ERROR`)
-  err.enabled = true
-
-  const json = (desc, json) => {
-    msg(`${desc}: ${JSON.stringify(json)}`)
-  }
-
-  return {
-    msg,
-    err,
-    json
-  }
+const options = {
+  handleExceptions: true,
+  json: false,
+  colorize: true,
 }
 
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.Console(options)
+  ],
+  format: winston.format.cli(),
+  exitOnError: false,
+  stream: {
+    write(message, encoding) {
+      logger.info(message)
+    }
+  }
+})
+
+logger.stream = {
+  write(message, encoding) {
+    logger.info(message)
+  },
+}
+
+module.exports = logger

@@ -3,7 +3,7 @@ const path = require('path')
 const expect = chai.expect
 const request = chai.request
 
-const logger = require('../../src/utils').logger(path.basename(__filename))
+const logger = require('../../src/utils').logger
 
 describe.skip('Load and retrieve value streams', () => {
 
@@ -12,9 +12,9 @@ describe.skip('Load and retrieve value streams', () => {
       .get('/blobs')
       .end((err, res) => {
         chai.request(server)
-          .put('/blob/' + res.body[0]._id)
+          .put(`/blob/${  res.body[0]._id}`)
           .send({ 'name': 'Spider' })
-          .end(function (error, response) {
+          .end((error, response) => {
             response.should.have.status(200);
             response.should.be.json;
             response.body.should.be.a('object');
@@ -24,7 +24,7 @@ describe.skip('Load and retrieve value streams', () => {
             response.body.UPDATED.should.have.property('_id');
             response.body.UPDATED.name.should.equal('Spider');
             done();
-          });
+          })
       })
   })
 })

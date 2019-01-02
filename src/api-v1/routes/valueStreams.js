@@ -1,30 +1,32 @@
 'use strict'
-
-const valueStreamService = require('../services/valueStreams')
-const logger = require('../../utils').logger('PATH:valueStreams')
-const openApi = require('../../api-v1/api-doc')
+const logger = require('../../utils').logger
+const valueStreams = require('../services/valueStreams')
+const openApi = require('../api-doc')
 
 module.exports = () => {
 
-  const GET = (req, res) => {
-    logger.msg(req.query.searchString)
-
-    logger.json('Req params', req.params)
-    logger.json('Req query', req.query)
-    logger.json('Req body', req.body)
-
-    logger.msg(Object.keys(openApi.paths['/valuestream/{teamId}']))
-
-    res.status(200).json({ 'response': openApi.paths['/valuestream/{teamId}'].get })
+  const GET = async (req, res, next) => {
+    try {
+      const result = await valueStreams.getValueStreams(req.query)
+      res.status(200).json(result)
+    } catch (err) {
+      logger.error(err.stack)
+      next(err)
+    }
   }
 
-  const PUT = (req, res) => {
-    logger.json('Req params', req.params)
-    logger.json('Req query', req.query)
-    logger.json('Req body', req.body)
+  const PUT = async (req, res, next) => {
+    try {
+      const result = await valueStreams.addValueStream(req.body)
+      logger.info(result)
 
-    const response = { 'response': 'Did it' }
-    res.status(200).json(response)
+      res.status(201).json(result)
+    } catch (err) {
+      logger.error(err.errors)
+      res.status(400)
+      res.send(err.errors)
+      next(err)
+    }
   }
 
   // Set the path metadata based on the Swagger file

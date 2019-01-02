@@ -1,51 +1,10 @@
 'use strict'
 
 const utils = require('../../utils')
-const logger = utils.logger('SERVICE:valueStreams')
-const apiDoc = require('../api-doc')
-const models = require('../../db/models')(apiDoc)
+const logger = utils.logger
+const modelBuilder = require('./modelBuilder')
 
-const ValueStream = models.ValueStream
-const Process = models.Process
-const Path = models.Path
-const generateSerialId = utils.generateSerialId
-
-const buildValueStream = (valueStream) => {
-  const newVS = {
-    teamName: valueStream.teamName,
-    teamId: valueStream.teamId || generateSerialId(valueStream.teamName, 10),
-    processes: valueStream.processes || []
-  }
-  return new ValueStream(newVS)
-}
-
-const buildProcessPath = (path) => {
-
-  const newPath = {
-    nextProcess: path.hasOwnProperty('stepId') ? path.stepId : null,
-    frequencyPct: path.hasOwnProperty('frequencyPct') ? path.frequencyPct : 0
-  }
-
-  return new Path(newPath)
-}
-
-const buildProcessStep = (step) => {
-
-  const newStep = {
-    stepId: step.stepId,
-    name: step.name,
-    description: step.description || '',
-    reprocessTime: step.reprocessTime || 0,
-    processTime: step.processTime,
-    waitTime: step.waitTime,
-    primaryPath: step.hasOwnProperty('primaryPath') ? buildProcessPath(step.primaryPath) : buildProcessPath({}),
-    exceptionPath: step.hasOwnProperty('exceptionPath') ? buildProcessPath(step.exceptionPath) : buildProcessPath({})
-  }
-
-  newStep.exceptionPath.frequencyPct = 100 - newStep.primaryPath.frequencyPct
-
-  return new Process(newStep)
-}
+const ValueStream = modelBuilder.ValueStreamModel
 
 const getValueStreams = async (search) => {
   const searchObj = Object(search)
@@ -62,20 +21,20 @@ const getValueStreams = async (search) => {
   try {
     return ValueStream.find(query).exec()
   } catch (err) {
-    logger.err(`getValueStreams: ${err}`)
+    logger.error(`getValueStreams: ${err}`)
     throw err
   }
 }
 
-const addValueStream = async (params) => {
-
-  const vsMap = buildValueStream(params.payload)
+const addValueStream = async (vsRec) => {
 
   try {
+    const vsMap = modelBuilder.ValueStreamModel(vsRec)
+
     const newVsMap = await vsMap.save()
     return newVsMap
   } catch (err) {
-    logger.err(`addValueStream: ${err}`)
+    logger.error(`addValueStream: ${err}`)
     throw err
   }
 }
@@ -83,7 +42,7 @@ const addValueStream = async (params) => {
 const addProcessStep = async (step, teamId) => {
   try {
     const team = await getValueStreams({ teamId })
-    const newStep = buildProcessStep(step)
+    const newStep = modelBuilder.processStep(step)
     const updatedTeam = team[0]
 
     updatedTeam.hasOwnProperty('processes') ?
@@ -91,7 +50,7 @@ const addProcessStep = async (step, teamId) => {
 
     return await ValueStream.findByIdAndUpdate(team[0]._id, updatedTeam, { new: true })
   } catch (err) {
-    logger.err(`addProcessStep: ${err}`)
+    logger.error(`addProcessStep: ${err}`)
     throw err
   }
 }

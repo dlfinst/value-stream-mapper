@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const MongoMemoryServer = require('mongodb-memory-server').default
-const logger = require('../utils').logger('mongo-mock')
+const logger = require('../utils').logger
 
 mongoose.Promise = Promise
 let mongoServer
@@ -18,11 +18,10 @@ const run = async () => {
   try {
     const mongoUri = await mongoServer.getConnectionString()
     await mongoose.connect(mongoUri, mongooseOpts)
-    // mongoose.connection.once('open', () => {
-    logger.msg(`MongoDB successfully connected to ${mongoUri}:${mongoose.connection.readyState}`)
-    // })
+    logger.silly(`MongoDB successfully connected to ${mongoUri}:${mongoose.connection.readyState}`)
   } catch (err) {
-    logger.err(err.stack)
+    logger.error(err.stack)
+    throw err
   }
 }
 
@@ -30,9 +29,10 @@ const stop = async () => {
   try {
     await mongoose.connection.close()
     await mongoServer.stop()
-    logger.msg(`MongoDB stop ${mongoose.connection.readyState}`)
+    logger.silly(`MongoDB stop ${mongoose.connection.readyState}`)
   } catch (err) {
-    logger.err(err.stack)
+    logger.error(err.stack)
+    throw err
   }
 }
 
