@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+
+  dojo-portal:
+    container_name: dojo-portal
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      
