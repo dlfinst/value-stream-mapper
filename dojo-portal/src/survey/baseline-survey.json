@@ -1,0 +1,302 @@
+{
+    "title": "Continuous Delivery Team Survey",
+    "completedHtml": "Thank you for completing the survey!",
+    "loadingHtml": "Loading... Please wait.",
+    "pages": [
+     {
+      "name": "page1",
+      "elements": [
+       {
+        "type": "dropdown",
+        "name": "teamName",
+        "title": "Team",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Team 1"
+         },
+         {
+          "value": "item2",
+          "text": "Team 2"
+         },
+         {
+          "value": "item3",
+          "text": "Team 2"
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "deployFrequency",
+        "title": "Scheduled deploy frequency",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Once per quarter or less."
+         },
+         {
+          "value": "item2",
+          "text": "Once or more per month."
+         },
+         {
+          "value": "item3",
+          "text": "Once per week."
+         },
+         {
+          "value": "item4",
+          "text": "More than once per week."
+         },
+         {
+          "value": "item5",
+          "text": "On demand with multiples per day."
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "testingProcess",
+        "title": "Quality process",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Mostly manual testing."
+         },
+         {
+          "value": "item2",
+          "text": "Mostly automated end to end testing with a separate testing suite."
+         },
+         {
+          "value": "item3",
+          "text": "Some unit testing running during the build."
+         },
+         {
+          "value": "item4",
+          "text": "Most testing happening with component, functional, contract, and unit tests.  Integration testing with live dependencies."
+         },
+         {
+          "value": "item5",
+          "text": "Service virtualization replaces live dependencies in the pipeline.  All tests can run in parallel."
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "branching",
+        "title": "Branching model (There are many branching models. If you don't know which you use, pick \"ad hoc\".)",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Ad hoc, no defined process."
+         },
+         {
+          "value": "item2",
+          "text": "GitFlow."
+         },
+         {
+          "value": "item3",
+          "text": "Branching from trunk.  Long lived branches for big changes."
+         },
+         {
+          "value": "item4",
+          "text": "Branching from trunk.  Average branch lifespan less than 48 hours."
+         },
+         {
+          "value": "item5",
+          "text": "Branching from trunk. Average branch lifespan less than 12 hours."
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "codeReview",
+        "title": "The standard process for code review on our team is most like:",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "No code reviews are happening."
+         },
+         {
+          "value": "item2",
+          "text": "Two or more people are required to review code."
+         },
+         {
+          "value": "item3",
+          "text": "Single reviewer for code.  Review is focused on function.  Diffs are very large and reviews typically take more than one hour."
+         },
+         {
+          "value": "item4",
+          "text": "Single reviewer for code.  Functionality is verified with tests.  Diffs are large and reviews typically take more than 30 minutes."
+         },
+         {
+          "value": "item5",
+          "text": "Tests run during PR, coding style is automated, linting is checking for standards and complexity, code is reviewed for testing and clarity.  Diffs are small and reviews take 10 minutes or less."
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "unplannedReleases",
+        "title": "Unplanned releases (Planned releases are scheduled in advance or on a regular cadence. Unplanned releases are the opposite.)",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Releases have no planned schedule."
+         },
+         {
+          "value": "item2",
+          "text": "50% or more of releases are not scheduled."
+         },
+         {
+          "value": "item3",
+          "text": "25% or more of releases are not scheduled."
+         },
+         {
+          "value": "item4",
+          "text": "10% or more of releases are not scheduled."
+         },
+         {
+          "value": "item5",
+          "text": "Releases are scheduled daily.  More than 90% of production fixes deploy using the planned schedule."
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "buildDuration",
+        "title": "Build duration (The time from initiation until ready to deploy to production.)",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Duration isn't tracked."
+         },
+         {
+          "value": "item2",
+          "text": "More than 1 hour."
+         },
+         {
+          "value": "item3",
+          "text": "11-30 minutes."
+         },
+         {
+          "value": "item4",
+          "text": "5-10 minutes."
+         },
+         {
+          "value": "item5",
+          "text": "Less than 5 minutes."
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "storySize",
+        "title": "The average time it takes to deliver a story after it meets the team's definition of ready.",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Longer than 2 weeks.."
+         },
+         {
+          "value": "item2",
+          "text": "1 to 2 weeks."
+         },
+         {
+          "value": "item3",
+          "text": "More than 4 days."
+         },
+         {
+          "value": "item4",
+          "text": "More than 2 days."
+         },
+         {
+          "value": "item5",
+          "text": "1 day or less."
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "crossFunctionalTeam",
+        "title": "Cross-functional team",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Team members have specific applications they work on. Testing is handled by other teams or specific team members."
+         },
+         {
+          "value": "item2",
+          "text": "Front and and back end work is divided in the team. Most testing handed off to a test automator."
+         },
+         {
+          "value": "item3",
+          "text": "Front and and back end work is divided in the team. Some testing handed off to a test automator."
+         },
+         {
+          "value": "item4",
+          "text": "Pairing is happening to help cross-train team members. Testing is handled by everyone on the team."
+         },
+         {
+          "value": "item5",
+          "text": "Anyone on the team can work on any component. Testing is handled by everyone on the team."
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "meanTimeToRepair",
+        "title": "Average time it takes the team to resolve an impacting incident. (Mean time to repair)",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "More than 24 hours."
+         },
+         {
+          "value": "item2",
+          "text": "13-24 hours."
+         },
+         {
+          "value": "item3",
+          "text": "6-12 hours."
+         },
+         {
+          "value": "item4",
+          "text": "1-5 hours."
+         },
+         {
+          "value": "item5",
+          "text": "Less than 1 hour."
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "incidentFrequency",
+        "title": "Change failure rate (The % of time that a change causes any negative impact.)",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "50% or more"
+         },
+         {
+          "value": "item2",
+          "text": "41% - 50%"
+         },
+         {
+          "value": "item3",
+          "text": "21% - 40%"
+         },
+         {
+          "value": "item4",
+          "text": "11% - 20%"
+         },
+         {
+          "value": "item5",
+          "text": "0% - 10%"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "isSinglePage": true
+   }

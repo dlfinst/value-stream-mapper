@@ -1,20 +1,28 @@
-import React, { Component } from 'react';
-import logo from './logo.png';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import SurveyPage from './survey/SurveyPage';
+import Home from './Home';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Welcome to the Virtual Dojo!
-          </p>
-        </header>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <Router>
+    <div>
+      <Header />
+
+      <Route exact path="/" component={Home} />
+      <Route path="/survey" component={SurveyPage} />
+    </div>
+  </Router>
+);
+
+const Header = () => (
+  <div>
+    <Link to="/">
+      <button>home</button>
+    </Link>
+    <Link to="/survey">
+      <button>survey</button>
+    </Link>
+  </div>
+);
 
 export default App;
